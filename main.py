@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middle.cors import CORSMiddleware
+
 
 app = FastAPI(
     title="Карта доступности API",
@@ -6,6 +8,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-@app get("/")
+@app get("/points")
 async def root():
-    return ["message": "Добро пожаловать на карту доступности города"]
+    return {"points":""}
+
