@@ -1,0 +1,7 @@
+my_fastapi_app/
+├── main.py
+├── database.py  # Конфигурация БД
+├── models.py    # Модели SQLAlchemy
+├── schemas.py   # Модели Pydantic
+└── crud.py      # Функции для работы с БД (опционально)
+```:cite[10]
