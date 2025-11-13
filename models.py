@@ -8,14 +8,15 @@ class Place(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
     address = Column(String(200))
-    latitude = Column(Float, nullable=False)
-    longitude = Column(Float, nullable=False)
     category = Column(String(50))
     
     wheelchair_accessible = Column(Boolean, default=False)
-    has_ramp= Column(Boolean, default=False)
-    has_wide_doors = Column(Boolean, default=False)
-    rating = Column(Integer, default=False)
+    SIM_accessible = Column(Boolean, default=False)
+    LowMobile_accessible = Column(Boolean, default=False)
+
     
-    description = Column(Text)
-    creaded_at = Column(DateTime(timezone=True), server_default=func.now())
+class Rating(Base):
+    __tablename__ = "reviews"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    place_id = Column(Integer,nullable=False)
