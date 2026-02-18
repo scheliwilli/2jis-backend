@@ -1,4 +1,11 @@
-fastapi==0.104.1
-uvicorn==0.24.0
-sqlalchemy==2.0.23
-python-multipart==0.0.6
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-dotenv
+python-jose[cryptography]
+passlib[bcrypt]
+email-validator
+osmnx
+networkx
+geopy
