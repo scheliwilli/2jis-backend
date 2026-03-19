@@ -31,6 +31,14 @@ def get_places(min_rating: Optional[float] = None,
     return query.all()
 
 
+@router.get("/{place_id}", response_model=schemas.PlaceOut)
+def get_place(place_id: int, db: Session = Depends(get_db)):
+    place = db.query(models.Place).filter(models.Place.id == place_id).first()
+    if not place:
+        raise HTTPException(404, "Такого места нет(")
+    return place
+
+
 @router.delete("/{place_id}")
 def delete_place(place_id: int,
                  db: Session = Depends(get_db),

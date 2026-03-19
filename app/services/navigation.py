@@ -17,18 +17,29 @@ def accessibility_weight(u, v, data, user_type="wheelchair"):
     weight = length
 
     if data.get("highway") == "steps":
-        weight += 2000
+        if user_type == "wheelchair":
+            weight += 2500
+        elif user_type == "mobility":
+            weight += 1200
+        elif user_type == "sim":
+            weight += 600
+        else:
+            weight += 2000
 
     if "incline" in data:
         try:
             incline = float(str(data["incline"]).replace("%", ""))
             if incline > 8:
-                weight += 500
+                if user_type == "wheelchair":
+                    weight += 800
+                elif user_type == "mobility":
+                    weight += 450
+                elif user_type == "sim":
+                    weight += 250
+                else:
+                    weight += 500
         except:
             pass
-
-    if user_type == "blind":
-        weight += 0
 
     return weight
 
