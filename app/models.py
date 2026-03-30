@@ -8,6 +8,8 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True, nullable=False)
+    username = Column(String, unique=True, nullable=False)
+    age = Column(Integer)
     hashed_password = Column(String, nullable=False)
     role = Column(String, default="user")
 

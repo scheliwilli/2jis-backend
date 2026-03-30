@@ -44,7 +44,7 @@ def my_review(place_id: int, db: Session = Depends(get_db), user=Depends(get_cur
         .first()
     )
     if not r:
-        raise HTTPException(404, "No review")
+        return None
 
     return {
         "id": r.id,
@@ -64,14 +64,15 @@ def add_review(place_id: int,
     place = db.query(models.Place).filter(models.Place.id == place_id).first()
     if not place:
         raise HTTPException(404, "Такого места пока нет")
- # запрет повтороной оценки???
+
+    # Проверяем есть ли уже отзыв от этого пользователя
     existing_review = db.query(models.Review).filter(
         models.Review.place_id == place_id,
         models.Review.user_id == user.id
     ).first()
 
     if existing_review:
-        raise HTTPException(400, "Нужно оценить это место")
+        raise HTTPException(400, "Вы уже оценили это место")
 
     new_review = models.Review(
         rating=review.rating,
@@ -83,12 +84,12 @@ def add_review(place_id: int,
     db.add(new_review)
     db.commit()
 
-
+    # Обновляем средний рейтинг места
     avg = db.query(func.avg(models.Review.rating)).filter(
         models.Review.place_id == place_id
     ).scalar()
 
-    place.average_rating = round(avg, 2)
+    place.average_rating = round(avg, 2) if avg else 0
     db.commit()
 
     return {"message": "Ваш отзыв добавлен", "рейтинг": place.average_rating}

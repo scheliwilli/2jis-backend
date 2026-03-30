@@ -5,6 +5,13 @@ from datetime import datetime
 
 class UserCreate(BaseModel):
     email: EmailStr
+    username: str
+    age: int
+    password: str
+
+
+class UserLogin(BaseModel):
+    email: EmailStr
     password: str
 
 
